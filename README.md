@@ -32,7 +32,7 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 
 ---
 
-# 📅 Desenvolvimento por Sprints
+# Desenvolvimento por Sprints
 
 # 🔵 Sprint 1 – Levantamento de Requisitos e Prototipação
 📅 06/05/2026 → 20/05/2026
