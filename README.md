@@ -1,7 +1,7 @@
-# Sistema Gerenciador de Doações
+# 🤝Sistema Gerenciador de Doações
 
 Sistema gerenciador de doações desenvolvido para auxiliar no controle, organização e distribuição de doações destinadas a municípios e pessoas em situação de vulnerabilidade. A plataforma permite que usuários realizem solicitações de kits/doações e que administradores responsáveis realizem a aprovação ou rejeição das solicitações, além do gerenciamento do estoque de produtos e kits.
----
+
 
 # 📌 Objetivo do Projeto
 
