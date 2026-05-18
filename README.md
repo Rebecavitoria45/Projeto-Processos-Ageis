@@ -40,10 +40,10 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 ## ⚙️ Principais atividades
 - levantamento dos requisitos funcionais e não funcionais
 - modelagem inicial do banco de dados 
-- criação dos protótipos das telas: [Sistema de doações](https://www.figma.com/proto/DU7ac0e0uTlp9YXAx1pXWQ/sistema-de-doa%C3%A7%C3%B5es?node-id=468-64&p=f&t=aW61tJIjFLzk0ZEf-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1)
-
-
-
+- criação dos protótipos das telas
 ## 📦 Resultados
 
 - Documento de requisitos: https://docs.google.com/document/d/1PCCNhKwN1NhGhPGWRK-PWDxkCaOavRvBhEeDmvE30yA/edit?usp=sharing
+- link do prototipo figma: [Sistema de doações](https://www.figma.com/proto/DU7ac0e0uTlp9YXAx1pXWQ/sistema-de-doa%C3%A7%C3%B5es?node-id=468-64&p=f&t=aW61tJIjFLzk0ZEf-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1)
+
+
