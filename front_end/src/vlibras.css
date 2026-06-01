@@ -1,0 +1,16 @@
+[vw],
+[vw-access-button],
+[vw-plugin-wrapper] {
+  position: fixed !important;
+  z-index: 2147483647 !important; /* maior valor possível */
+}
+
+html, body, app-root {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+[vw] {
+  top: auto !important;
+  left: auto !important;
+}
