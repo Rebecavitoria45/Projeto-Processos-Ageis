@@ -6,7 +6,7 @@ const cors = require('cors');
 
 
 // Importa as rotas existentes
-const usuarioRouter = require('./routers/UsuarioRouter');
+const usuarioRouter = require('./routers/usuarioRouter');
 
 // --- Importa os models para o Sequelize conhecê-los ---
 const Usuario = require('./models/usuario');
