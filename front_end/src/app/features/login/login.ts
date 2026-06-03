@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { LoginFormComponent } from '../../components/form-login/form-login';
+// import { ForgotPassword } from '../forgot-password/forgot-password'; 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,LoginFormComponent],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -32,6 +34,6 @@ export class LoginComponent {
 
   irParaEsqueciSenha(event: Event) {
     event.preventDefault(); 
-    this.router.navigate(['/esqueci-senha']); 
+    this.router.navigate(['/forgot-password']); 
   }
 }
