@@ -51,3 +51,13 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 [Sistema de doações](https://docs.google.com/document/d/1wrJ60wO4uT-JDGGaSTrLlKZ35sirrltfxIV8H0goedA/edit?usp=sharing)
 <img width="320" height="224" alt="image" src="https://github.com/user-attachments/assets/640dee07-4689-45c7-945d-42c0e9c7ba09" />
 
+# 🔵 Sprint 2 – Configurações iniciais e Módulo de usuários
+📅 21/05/2026 → 03/06/2026
+## ⚙️ Principais atividades
+- Construir a estrutura inicial do sistema
+- implementar o módulo de autenticação de usuários. 
+## 📦 Resultados
+- Configuração do Banco de dados
+- Configuração do Docker
+- Implementação do Módulo de usuários
+- Criação da tela de login e recuperação de senha
