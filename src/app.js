@@ -7,13 +7,17 @@ const cors = require('cors');
 
 // Importa as rotas existentes
 const usuarioRouter = require('./routers/usuarioRouter');
+const produtoRouter = require('./routers/ProdutoRouter');
+const entradaProdutoRoutes = require('./routers/EntradaProdutoRouter');
 
 // --- Importa os models para o Sequelize conhecê-los ---
 const Usuario = require('./models/usuario');
+const EntradaProduto = require('./models/EntradaProduto');
+const Produto = require('./models/Produto');
 
 // --- Configura as Associações ---
 // Colocamos os modelos num objeto para facilitar
-const models = { Usuario};
+const models = { Usuario, EntradaProduto, Produto};
 
 // Percorre cada modelo e, se tiver o método 'associate', executa ele
 Object.keys(models).forEach(modelName => {
@@ -34,6 +38,8 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api', usuarioRouter);
+app.use('/api', produtoRouter);
+app.use('/api', entradaProdutoRoutes);
 
 const startServer = async () => {
     try {
