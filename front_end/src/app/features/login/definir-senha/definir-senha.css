@@ -1,0 +1,104 @@
+.definir-senha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ff8c3a;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-wrapper {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 50px 40px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.logo-top {
+  width: 120px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.form-wrapper h2 {
+  margin-bottom: 25px;
+  color: #1a3763;
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 3px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 1%;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1a3763;
+  box-shadow: 0 0 5px rgba(26, 55, 99, 0.3);
+}
+
+button[type="submit"] {
+  width: auto;
+  padding: 12px 30px;
+  background-color: #1a3763; /* azul marinho */
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: block;
+  margin: 20px auto 0 auto;
+  margin-top: 1%;
+}
+
+button[type="submit"]:hover {
+  background-color: #102347;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.erro {
+  color: #d32f2f;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mensagem-sucesso {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #1a3763;
+  text-align: center;
+  padding: 20px;
+}

@@ -1,0 +1,134 @@
+/* Fundo com leve blur */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Container */
+.modal-content {
+  background: #ffffff;
+  width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 30px;
+  border: 1px solid #d7d9dc;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  animation: fadeIn 0.25s ease-in-out;
+  position: relative;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Botão X */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  color: #444b52;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Títulos */
+h2, h3{
+  color: #2a2f33;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+h4 {
+  color: #2a2f33;
+  margin-top: 36px;
+  font-weight: 600;
+}
+/* Formulário */
+.form-group {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3e454b;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #c6c8cc;
+  background: #f7f8fa;
+  transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #005fa3;
+  background: #ffffff;
+  outline: none;
+}
+
+/* Botões */
+.button-group {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn.enviar {
+  background: #005fa3;
+  color: white;
+}
+
+.btn.enviar:hover {
+  background: #00497e;
+}
+
+.btn.cancelar {
+  background: #e3e4e6;
+  color: #2a2f33;
+}
+
+.btn.cancelar:hover {
+  background: #c7c9cc;
+}
+
+hr {
+  margin: 16px 0;
+  border: 0;
+  height: 1px;
+  background: #e1e2e5;
+}

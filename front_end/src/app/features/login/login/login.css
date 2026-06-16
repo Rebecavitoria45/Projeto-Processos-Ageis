@@ -1,0 +1,93 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-page {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  flex: 1;
+  background: url('/assets/pexels.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(26,55,99,0.7), rgba(255,140,58,0.7));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.left-content h1 {
+  font-size: 3rem;
+  color: #fff;
+  margin: 0;
+  animation: fadeIn 1s ease-out;
+}
+
+.left-content p {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-top: 10px;
+  animation: fadeIn 1.5s ease-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+   background-color: #1a3763;
+
+}
+
+.login-card {
+  background: #fff;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  width: 380px;
+  text-align: center;
+  position: relative;
+}
+
+.top-logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    height: 250px;
+  }
+
+  .login-card {
+    width: 90%;
+    padding: 35px 25px;
+  }
+}

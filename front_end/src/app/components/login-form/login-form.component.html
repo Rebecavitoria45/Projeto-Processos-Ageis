@@ -1,0 +1,32 @@
+<h2>Login</h2>
+<p class="subtitle">Entre com suas credenciais</p>
+
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group" [ngClass]="{'invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+    <input id="email" type="email" formControlName="email" placeholder=" " required />
+    <label for="email">E-mail</label>
+    <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="erro">
+      E-mail inválido.
+    </small>
+  </div>
+
+  <div class="form-group" [ngClass]="{'invalid': loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched}">
+    <input id="senha" type="password" formControlName="senha" placeholder=" " required />
+    <label for="senha">Senha</label>
+    <small *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" class="erro">
+      Senha obrigatória.
+    </small>
+  </div>
+
+  <div class="login-options">
+   
+   <a href="#" (click)="irParaEsqueciSenha(); $event.preventDefault()" class="forgot">
+  Esqueci minha senha
+</a>
+
+  </div>
+
+  <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+
+  <p *ngIf="errorMsg" class="erro">{{ errorMsg }}</p>
+</form>

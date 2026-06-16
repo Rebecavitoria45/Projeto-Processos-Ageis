@@ -1,0 +1,64 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <button class="close-btn" (click)="fechar()">×</button>
+
+    <h2>Cadastrar Novo Kit</h2>
+
+    <!-- Tipo do Kit -->
+    <div class="form-group">
+      <label>Tipo do Kit</label>
+      <div class="radio-group">
+        <label *ngFor="let tipo of tiposKit" class="radio-item">
+          <input type="radio" name="tipo_kit" [(ngModel)]="tipo_kit" [value]="tipo.value">
+          {{ tipo.label }}
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Quantidade de Kits</label>
+      <input type="number" [(ngModel)]="quantidade_kit" min="1">
+    </div>
+<div class="form-group">
+  <label>Origem do Kit:</label>
+  <select [(ngModel)]="origemKit">
+    <option *ngFor="let origem of origemProdutos" [value]="origem.value">
+      {{ origem.label }}
+    </option>
+  </select>
+</div>
+
+
+    <h4>Produtos do Kit</h4>
+
+    <div *ngFor="let p of produtos; let i = index">
+      <div class="form-group">
+        <label>Nome do Produto</label>
+        <input [(ngModel)]="p.nome_produto" />
+      </div>
+
+      <div class="form-group">
+        <label>Quantidade</label>
+        <input type="number" [(ngModel)]="p.quantidade" min="1" />
+      </div>
+
+      <div class="form-group">
+        <label>Data de Validade</label>
+        <input type="date" [(ngModel)]="p.data_validade" />
+      </div>
+
+      <button class="btn cancelar" (click)="removerProduto(i)">Remover Produto</button>
+      <hr />
+    </div>
+
+    <button class="btn enviar" (click)="adicionarProduto()">+ Produto</button>
+
+    <div class="button-group">
+      <button class="btn enviar" (click)="salvar()" [disabled]="loading">
+        <span *ngIf="!loading">Salvar</span>
+        <span *ngIf="loading" class="loader"></span>
+      </button>
+      <button class="btn cancelar" (click)="fechar()">Cancelar</button>
+    </div>
+  </div>
+</div>

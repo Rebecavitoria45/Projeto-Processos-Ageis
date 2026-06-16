@@ -1,0 +1,129 @@
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: #032b63; 
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  overflow: hidden;
+  padding: 0;
+}
+
+.sidebar-top {
+  flex: 1;
+  overflow-y: auto;
+  padding: 25px 18px 15px 18px;
+}
+.logo {
+  width: 140px;
+  display: block;
+  margin: 0 auto 25px auto;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 4rem;
+  margin-top: 3rem;
+}
+
+
+h4 {
+  text-align: center;
+  font-size: 1rem;
+  font-weight:300 ;
+  color: #ffffff;
+  margin-bottom: 25px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  margin-bottom: 8px;
+}
+
+ul li a {
+  text-decoration: none;
+  color: #d6d6d6;
+  display: block;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+/* ===== HOVER ===== */
+ul li a:hover {
+  background-color: #ff7f11;
+  color: #fff;
+  transform: translateX(5px);
+}
+
+/* ===== ITEM ATIVO ===== */
+ul li.ativo a,
+ul li.router-link-active a {
+  background-color: #ff7f11;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ====== BOTÃO SAIR ====== */
+.sidebar-bottom {
+  padding: 15px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.btn-logout {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #ff7f11;
+  color: #001f3f;
+}
+
+/* ====== SCROLL ====== */
+.sidebar-top::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-top::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 768px) {
+  #sidebar {
+    width: 200px;
+  }
+}
+
+/* ====== CONTEÚDO ====== */
+main,
+router-outlet {
+  margin-left: 240px;
+  padding: 25px;
+}

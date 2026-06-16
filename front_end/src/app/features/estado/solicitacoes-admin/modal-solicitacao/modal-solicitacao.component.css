@@ -1,0 +1,103 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  animation: fadeBg 0.2s ease-in-out;
+}
+
+.modal-container {
+  background: #ffffff;
+  width: 600px;
+  max-width: 90%;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  overflow: auto;
+  max-height: 90vh;
+}
+
+.animate-modal {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.label-textarea {
+  margin-top: 10px;
+  font-weight: bold;
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  resize: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+
+.btn-pdf{
+  background: #636e72;
+}
+.btn-pdf:hover{
+    background: #5c6366;
+}
+.btn.aprovar {
+  background: #28a745;
+}
+.btn.aprovar:disabled {
+  background: #8cd3a1;
+}
+
+.btn.reprovar {
+  background: #d63031;
+}
+.btn.reprovar:disabled {
+  background: #f3a5a5;
+}
+
+.btn.fechar {
+  background: #636e72;
+}
+.alerta-status {
+  background: #ffe8e8;
+  color: #b00000;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ffb3b3;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}

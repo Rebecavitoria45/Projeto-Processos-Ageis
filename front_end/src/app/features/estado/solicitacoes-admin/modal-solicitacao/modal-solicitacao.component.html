@@ -1,0 +1,64 @@
+<div class="modal-backdrop" *ngIf="aberto">
+  <div class="modal-container animate-modal">
+
+    <h2 class="titulo-modal">Detalhes da Solicitação</h2>
+
+    <div class="info-group">
+      <p><strong>Kit:</strong> {{ solicitacao.tipo_kit }}</p>
+      <p><strong>Usuario / Usuário:</strong> {{ solicitacao.municipioOuUsuario }}</p>
+      <p><strong>Data:</strong> {{ solicitacao.dataSolicitacao }}</p>
+      <p><strong>Status:</strong> {{ solicitacao.status }}</p>
+    </div>
+
+    <p *ngIf="solicitacao.status !== 'pendente'" class="msg-info alerta-status">
+      Esta solicitação já foi analisada e não pode ser alterada.
+    </p>
+
+    <hr>
+
+    <div class="info-group">
+      <p><strong>Quantidade Solicitada:</strong> {{ solicitacao.quantidadeSolicitada }}</p>
+      <p><strong>Quantidade Atendida:</strong> {{ solicitacao.quantidadeAtendida }}</p>
+    </div>
+
+    <div class="info-group destaque-estoque">
+      <p><strong>Estoque Atual:</strong> {{ solicitacao.quantidadeEstoque }}</p>
+      <p *ngIf="solicitacao.quantidadeAtendida > 0">
+        <strong>Estoque Após Atendimento:</strong>
+        {{ solicitacao.quantidadeEstoque - solicitacao.quantidadeAtendida }}
+      </p>
+    </div>
+
+    <hr>
+
+    <div *ngIf="solicitacao.status === 'pendente'">
+      <label class="label-textarea">Observação:</label>
+      <textarea [(ngModel)]="observacao"
+                placeholder="Digite sua observação..."
+                rows="3"></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn fechar" (click)="fecharModal()">Fechar</button>
+
+      <ng-container *ngIf="podeAprovar()">
+        <button class="btn aprovar"
+                [disabled]="carregando"
+                (click)="aprovar()">
+          <span *ngIf="!carregando">Aprovar</span>
+          <span *ngIf="carregando">Aguarde...</span>
+        </button>
+
+        <button class="btn reprovar"
+                [disabled]="carregando"
+                (click)="recusar()">
+          <span *ngIf="!carregando">Reprovar</span>
+          <span *ngIf="carregando">Aguarde...</span>
+        </button>
+        
+      </ng-container>
+      
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,121 @@
+/* Fundo com blur */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #ffffff;
+  width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 28px;
+  border: 1px solid #d7d9dc;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  position: relative;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #2a2f33;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3e454b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #c6c8cc;
+  border-radius: 6px;
+  background: #f7f8fa;
+  outline: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: #005fa3;
+  background: #ffffff;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn.salvar {
+  background: #005fa3;
+  color: #fff;
+}
+.btn.salvar:hover {
+  background: #00497e;
+}
+
+.btn.cancelar {
+  background: #e3e4e6;
+  color: #2a2f33;
+}
+.btn.cancelar:hover {
+  background: #c7c9cc;
+}
+
+.btn.deletar {
+  background: #c62828;
+  color: #fff;
+}
+.btn.deletar:hover {
+  background: #a51f1f;
+}
+
+.close-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: #444b52;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #000;
+}

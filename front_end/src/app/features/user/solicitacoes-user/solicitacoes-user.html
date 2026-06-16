@@ -1,0 +1,79 @@
+<app-public-layout>
+  <div class="conteudo-solicitacoes">
+
+    <div class="solicitacoes-header">
+      <h1 class="titulo-pagina">Solicitações</h1>
+      <p class="subtitulo">Verifique aqui as solicitações já realizadas</p>
+    </div>
+
+    <!-- ===== Ações ===== -->
+    <div class="acoes-header">
+      <button class="btn-nova-solicitacao" (click)="abrirModal()">
+        Realizar solicitação <span class="plus">+</span>
+      </button>
+    </div>
+
+    <div class="filtro-periodo">
+      <label>Período:</label>
+      <select [(ngModel)]="periodoFiltro">
+        <option value="dia">Hoje</option>
+        <option value="semana">Última semana</option>
+        <option value="mes">Este mês</option>
+        <option value="ano">Este ano</option>
+      </select>
+      <button class="btn-gerar" (click)="gerarRelatorioPDF()">Gerar PDF</button>
+    </div>
+
+    <!-- ===== Pesquisa ===== -->
+    <div class="pesquisa-container">
+      <input type="text" placeholder="Pesquisar" [(ngModel)]="filtro" class="campo-pesquisa" />
+      <button class="btn-filtro"><mat-icon>filter_list</mat-icon></button>
+    </div>
+
+    <!-- ===== Tabela de Solicitações ===== -->
+    <div class="tabela-container">
+      <table class="tabela-solicitacoes">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th (click)="ordenar('quantidade')">
+              Quantidade
+              <span *ngIf="ordenarCampo==='quantidade'">{{ ordenarAsc ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="ordenar('data')">
+              Data da solicitação
+              <span *ngIf="ordenarCampo==='data'">{{ ordenarAsc ? '▲' : '▼' }}</span>
+            </th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of solicitacoesFiltradas">
+            <td>{{ s.produto }}</td>
+            <td>{{ s.quantidade }}</td>
+            <td>{{ s.dataSolicitacao | date:'dd/MM/yyyy' }}</td>
+            <td>{{ s.status }}</td>
+            <td>
+              <button class="btn-detalhes" (click)="verDetalhes(s)">Ver detalhes</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ===== Modais ===== -->
+    <app-solicitacao-criar-modal
+      *ngIf="mostrarModal"
+      (fechado)="fecharModal()"
+      (criada)="salvarSolicitacao()">
+    </app-solicitacao-criar-modal>
+
+    <app-solicitacao-detalhes-modal
+      *ngIf="solicitacaoSelecionada"
+      [solicitacao]="solicitacaoSelecionada"
+      (fecharModal)="solicitacaoSelecionada = null">
+    </app-solicitacao-detalhes-modal>
+
+  </div>
+</app-public-layout>
