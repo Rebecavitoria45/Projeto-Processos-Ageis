@@ -1,0 +1,90 @@
+<app-public-layout>
+
+  <div class="conteudo">
+
+    <div class="topo">
+      <h1>Kits e Produtos</h1>
+      <p>Gerencie aqui os kits e os produtos cadastrados automaticamente</p>
+      <button class="btn-add" (click)="abrirModalKit()">+ Cadastrar Kit</button>
+    </div>
+
+    <div class="pesquisa-container">
+      <input
+        type="text"
+        placeholder=" Pesquisar kit ou produto"
+        [(ngModel)]="filtro"
+        class="campo-pesquisa"
+      />
+    </div>
+
+    <div class="tabela-container">
+      <h3 class="titulo-tabela">Kits Cadastrados</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Qtd. Kits</th>
+            <th>Origem</th>
+            <th>Data Entrada</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let kit of kits">
+            <td>{{ kit.kit_id }}</td>
+            <td>{{ kit.tipo_kit }}</td>
+            <td>{{ kit.quantidade_kit }}</td>
+            <td>{{ kit.origem === 'doacao' ? 'Doação' : 'Compra' }}</td>
+            <td>{{ kit.data_entrada | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <button class="btn-detalhes" (click)="abrirModalDetalhes(kit)">
+                ver detalhes
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<div class="tabela-container">
+  <h3 class="titulo-tabela">Produtos em Estoque</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>ID</th>
+        <th>Data Validade</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of produtos">
+        <td>{{ p.nome }}</td>
+        <td>{{ p.produto_id }}</td>
+        <td>{{ p.data_validade | date:'dd/MM/yyyy' }}</td>
+        <td>{{ p.quantidade }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  </div>
+
+  <!-- MODAIS -->
+  <app-modal-kit
+    *ngIf="showModalKit"
+    (close)="fecharModalKit($event)">
+  </app-modal-kit>
+  
+  <app-modal-kit-detalhes
+  *ngIf="modalDetalhesData"
+  [kit]="modalDetalhesData"
+  (fechar)="fecharModalDetalhes($event)">
+</app-modal-kit-detalhes>
+
+</app-public-layout>

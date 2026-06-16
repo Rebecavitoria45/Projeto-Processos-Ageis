@@ -1,0 +1,163 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 720px;
+  max-width: 95%;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 10px;
+  border: 1px solid #d7d9dc;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+h2, h3 {
+  color: #2a2f33;
+  text-align: center;
+  margin-bottom: 28px;
+  font-weight: 600;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3e454b;
+  margin-bottom: 6px;
+}
+
+input.form-control {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid #c6c8cc;
+  background: #f7f8fa;
+  transition: .2s;
+}
+
+input.form-control:focus {
+  border-color: #005fa3;
+  background: #ffffff;
+  outline: none;
+}
+
+.produto-item {
+  margin-bottom: 10px;
+}
+
+.produto-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.produto-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.produto-row input.quantidade {
+  max-width: 90px;
+}
+
+.produto-row input.validade {
+  max-width: 140px;
+}
+
+.add-produto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 14px auto;
+  background: #005fa3;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+
+
+}
+
+.add-produto:hover {
+  background: #00497e;
+}
+
+.button-separator {
+  border: 0;
+  height: 1px;
+  background: #e1e2e5;
+  margin: 26px 0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.enviar {
+  background: #005fa3;
+  color: #fff;
+}
+
+.enviar:hover {
+  background: #00497e;
+}
+
+.cancelar {
+  background: #e3e4e6;
+  color: #2a2f33;
+}
+
+.cancelar:hover {
+  background: #c7c9cc;
+}
+
+.deletar {
+  background: #d93d3f;
+  color: #fff;
+}
+
+.deletar:hover {
+  background: #b32f31;
+}

@@ -1,0 +1,75 @@
+<app-public-layout>
+  <div class="page">
+
+    <div class="page-header">
+      <h1>Controle de Estoque</h1>
+      <p>Resumo e movimentação de entradas e saídas</p>
+    </div>
+
+    <div class="cards-resumo">
+
+      <div class="card total-estoque">
+        <h2>Total em Estoque</h2>
+        <p>{{ totalEstoque }}</p>
+      </div>
+
+      <div class="card kit-card" *ngFor="let kit of kits">
+        <h2>{{ kit.tipo_kit || kit.produto || '—' }}</h2>
+        <p>{{ kit.quantidade_kit }}</p>
+      </div>
+
+      <div class="card total-saidas">
+        <h2>Total de Saídas</h2>
+        <p>{{ totalSaidas }}</p>
+      </div>
+
+    </div>
+
+    <!-- FILTRO DE DATA -->
+    <div class="filtro-data">
+      <label>
+        De:
+        <input type="date" [(ngModel)]="dataInicio">
+      </label>
+
+      <label>
+        Até:
+        <input type="date" [(ngModel)]="dataFim">
+      </label>
+
+      <button (click)="aplicarFiltro()">Filtrar</button>
+    </div>
+
+    <!-- TABELA -->
+    <table class="tabela-saidas" *ngIf="saidasFiltradas.length > 0; else semDados">
+      <thead>
+        <tr>
+          <th>Nome do Kit</th>
+          <th>Quantidade</th>
+          <th>Data</th>
+          <th>Município</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let s of saidasFiltradas">
+          <td>{{ s.nomeKit }}</td>
+          <td>{{ s.quantidade }}</td>
+          <td>{{ s.createdAt | date:'dd/MM/yyyy' }}</td>
+          <td>{{ s.municipio }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #semDados>
+      <p class="mensagem-sem-dados">
+        Nenhuma movimentação encontrada nesse período.
+      </p>
+    </ng-template>
+
+    <div class="relatorio-container" *ngIf="saidasFiltradas.length > 0">
+      <button (click)="gerarRelatorioPDF()">Gerar Relatório PDF</button>
+    </div>
+
+  </div>
+</app-public-layout>

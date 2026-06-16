@@ -1,0 +1,180 @@
+
+
+.page-header {
+  margin-top: -0.5rem;
+  color: #777;
+  font-size: 0.95rem;
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+
+.cards-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 4rem; 
+  
+}
+:host {
+  width: 100%;
+}
+
+:host ::ng-deep .main-content,
+:host ::ng-deep .page-content-wrapper {
+  padding: 1.5rem 2rem !important;
+  margin-left: 0 !important;
+  padding-top: -1rem !important;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem 1.8rem;
+  flex: 1 1 200px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: #003366;
+}
+
+.card p {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.total-saidas {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.total-estoque {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.kit-card {
+  border-top-width: 4px;
+  border-top-style: solid;
+  border-top-color: #1976d2;
+}
+
+.filtro-data {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem; /* mais espaçamento da tabela */
+  align-items: flex-end; /* alinha botão com os inputs */
+}
+
+.filtro-data label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  color: #003366;
+}
+
+.filtro-data input[type="date"] {
+  padding: 0.45rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+}
+
+.filtro-data button {
+  padding: 0.5rem 1.2rem;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: fit-content; 
+}
+
+.filtro-data button:hover {
+  background-color: #115293;
+}
+
+.tabela-saidas {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem; /* mais espaçamento entre filtro e tabela */
+  font-size: 0.95rem;
+  color: #003366;
+}
+
+.tabela-saidas th,
+.tabela-saidas td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.tabela-saidas th {
+  background-color: #f3f3f3;
+  font-weight: 600;
+}
+
+.tabela-saidas tr:hover {
+  background-color: #f0f4f8;
+}
+
+/* Botão gerar relatório */
+.relatorio-container {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+.relatorio-container button {
+  padding: 0.6rem 1.3rem;
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.relatorio-container button:hover {
+  background-color: #2e7d32;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cards-resumo {
+    flex-direction: column;
+  }
+
+  .filtro-data {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .relatorio-container {
+    text-align: center;
+  }
+}

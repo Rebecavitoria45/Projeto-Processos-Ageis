@@ -1,0 +1,24 @@
+<div class="modal-backdrop">
+  <div class="modal-container">
+    <h2>Detalhes da Solicitação</h2>
+
+    <p><strong>ID:</strong> {{ solicitacao?.solicitacao_id }}</p>
+    <p><strong>Produto:</strong> {{ solicitacao?.produto }}</p>
+    <p><strong>Quantidade Solicitada:</strong> {{ solicitacao?.quantidade_solicitada }}</p>
+    <p><strong>Quantidade Atendida:</strong> {{ solicitacao?.quantidade_atendida }}</p>
+    <p><strong>Data da Solicitação:</strong> {{ solicitacao?.data_solicitacao | date:'dd/MM/yyyy HH:mm' }}</p>
+    <p><strong>Status:</strong> 
+      <span class="badge" [ngClass]="{
+        'aprovado': solicitacao?.status.toLowerCase() === 'aprovado',
+        'pendente': solicitacao?.status.toLowerCase() === 'em análise',
+        'rejeitado': solicitacao?.status.toLowerCase() === 'reprovado'
+      }">{{ solicitacao?.status }}</span>
+    </p>
+    <p><strong>Observação:</strong> {{ solicitacao?.observacao }}</p>
+    <p><strong>Usuário ID:</strong> {{ solicitacao?.usuario_id }}</p>
+
+    <div class="buttons">
+      <button class="cancel" (click)="fechar()">Fechar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ usuario ? 'Editar Usuário' : 'Cadastrar Usuário' }}</h2>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+      <div class="form-group">
+        <label>Cidade / Alocação</label>
+        <select formControlName="nome">
+          <option value="" disabled selected>Selecione a cidade do usuário</option>
+          <option *ngFor="let cidade of cidadesDisponiveis" [value]="cidade">
+            {{ cidade }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>E-mail</label>
+        <input formControlName="email" type="email" placeholder="Digite o e-mail" />
+        <small *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error">
+          E-mail inválido.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Função (Role)</label>
+        <select formControlName="role">
+          <option value="usuario">Usuario</option>
+        </select>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn salvar">
+          {{ usuario ? 'Salvar Alterações' : 'Cadastrar' }}
+        </button>
+        <button type="button" class="btn cancelar" (click)="fecharModal()">Cancelar</button>
+        <button *ngIf="usuario && usuario.role !== 'admin'" type="button" class="btn deletar" (click)="solicitarDelete()">
+          Deletar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

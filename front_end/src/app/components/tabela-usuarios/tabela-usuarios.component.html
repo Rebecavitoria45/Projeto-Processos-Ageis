@@ -1,0 +1,27 @@
+<div class="tabela-container">
+  <table class="tabela-usuarios">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cargo / Role</th>
+        <th>Email</th>
+        <th class="acoes-col">Ações</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.role }}</td>
+        <td>{{ usuario.email }}</td>
+        <td class="acoes-cell">
+          <button class="btn-acoes btn-ver" (click)="abrirDetalhes(usuario)">Ver Detalhes</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="usuarios.length === 0">
+        <td colspan="4" class="sem-dados">Nenhum usuário cadastrado</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

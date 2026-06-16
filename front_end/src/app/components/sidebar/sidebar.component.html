@@ -1,0 +1,27 @@
+<div id="sidebar">
+  <div class="sidebar-top">
+
+    <img 
+    src="/assets/logo.png" 
+    alt="Logo" 
+    class="logo"
+    (click)="goHome()"
+    style="cursor: pointer;"
+  />
+  
+    <ul>
+      <li *ngFor="let item of menuItems" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: item.route === '/homepage' }">
+        <a [routerLink]="item.route">
+          {{ item.label }}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar-bottom">
+    <button class="btn-logout" (click)="logout()">
+      <i class="feather-icon feather-log-out"></i>
+      Sair
+    </button>
+  </div>
+</div>

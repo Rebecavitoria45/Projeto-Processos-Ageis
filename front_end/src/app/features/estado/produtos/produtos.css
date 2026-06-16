@@ -1,0 +1,109 @@
+
+.topo h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+.topo p {
+  color: #777;
+  font-size: 0.95rem;
+}
+.btn-add {
+  min-width: 180px; 
+    align-self: flex-start; 
+    background: #ff8c00;
+    color: #fff;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  
+}
+
+.btn-add:hover {
+  background-color: #e36f0e;
+}
+
+/* Botão detalhes */
+.btn-detalhes {
+  background-color: #006aff;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1.3rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.btn-detalhes:hover {
+    background-color: #3356b6;
+
+
+}
+
+/* PESQUISA */
+.pesquisa-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.campo-pesquisa {
+  width: 100%;
+  max-width: 600px;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* TABELAS */
+.tabela-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  overflow-x: auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.titulo-tabela {
+  font-size: 1.3rem;
+  color: #003366;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f4fa;
+  color: #002b5c;
+  font-weight: 600;
+  padding: 0.8rem;
+  border-bottom: 2px solid #d9e2ef;
+}
+
+td {
+  padding: 0.7rem;
+  border-bottom: 1px solid #e0e6ed;
+  font-size: 0.95rem;
+}
+
+tr:hover {
+  background-color: #f8fbff;
+}

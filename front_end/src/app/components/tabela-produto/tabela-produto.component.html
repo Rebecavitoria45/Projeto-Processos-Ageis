@@ -1,0 +1,36 @@
+<div class="caixa-tabela">
+  <div class="topo-tabela">
+    <h3 class="titulo-tabela">Saídas recentes</h3>
+    <div class="campo-data">
+      <input type="date" />
+      <i class="bi bi-calendar-event"></i>
+    </div>
+  </div>
+
+  <table class="tabela">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Código de saída</th>
+        <th>Data de saída</th>
+        <th>Quantidade</th>
+        <th>Município</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of saidas">
+        <td>{{ item.nome }}</td>
+        <td>{{ item.codigo }}</td>
+        <td>{{ item.data }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td class="link-municipio">{{ item.municipio }}</td>
+        <td>
+          <button class="btn-detalhes" (click)="abrirDetalhes(item)">
+            Ver detalhes
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
