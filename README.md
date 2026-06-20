@@ -61,3 +61,14 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 - Configuração do Docker
 - Implementação do Módulo de usuários
 - Criação da tela de login e recuperação de senha
+
+# 🔵 Sprint 3 – Módulo de gerenciamento de estoque(Produtos e Kits)
+📅 04/06/2026 → 17/06/2026
+## ⚙️ Principais atividades
+- Criação do CRUD de Produtos
+- Criação do CRUD de Kits
+- Telas de Gerenciamento de Estoque
+## 📦 Resultados
+- Conclusão do Módulo de gerenciamento de estoque (Produtos e Kits)
+  
+
