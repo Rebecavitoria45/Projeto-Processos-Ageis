@@ -40,7 +40,6 @@ export class HomepageComponent implements AfterViewInit {
   kitsDisponiveis: any[] = [];
   dataAtual: Date = new Date();
 
-  // Guardamos a última contagem processada para re-plotar se o mapa demorar a iniciar
   private ultimaContagem: { [key: string]: number } = {};
 
   constructor(
@@ -51,7 +50,6 @@ export class HomepageComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    // Aumentamos levemente o timeout para dar tempo do HTML processar a div #map
     setTimeout(() => {
       this.inicializarMapa();
       this.carregarDados();
