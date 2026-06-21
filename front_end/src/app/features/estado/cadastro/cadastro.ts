@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UsuarioService } from '../../../Service/usuario.service'; 
 import { CommonModule } from '@angular/common';
 import { ModalCadastroComponent } from './modais/modal-cadastro/modal-cadastro.component';
-import { TabelausuariosComponent } from '../../../components/tabela-usuarios/tabela-usuarios.component'; 
+import { TabelausuariosComponent } from '../../../components/tabela-usuarios/tabela-usuarios.component';
 import { PublicLayoutComponent } from '../../../components/public-layout/public-layout.component'; 
 
 @Component({
@@ -17,13 +17,12 @@ import { PublicLayoutComponent } from '../../../components/public-layout/public-
   templateUrl: './cadastro.html',
   styleUrls: ['./cadastro.css']
 })
-export class CadastroComponent implements OnInit {
-  usuarios: any[] = [];
-  usuarioSelecionado: any | null = null;
+export class CadastroComponent {
+  municipios: any[] = [];
+  municipioSelecionado: any | null = null;
   mostrarModal = false;
 
   constructor(private usuarioService: UsuarioService) {}
-  
   ngOnInit() {
     this.carregarUsuarios();
   }
@@ -31,20 +30,20 @@ export class CadastroComponent implements OnInit {
   carregarUsuarios() {
     this.usuarioService.listarUsuarios().subscribe({
       next: (res) => {
-        this.usuarios = res.filter((u: any) => u.role !== 'admin');
+        this.municipios = res.filter((u: any) => u.role !== 'admin');
       },
       error: (err) => console.error('Erro ao listar usuários:', err)
     });
   }
   
   salvarOuAtualizar(dados: any) {
-    if (this.usuarioSelecionado) {
-      const id = Number(this.usuarioSelecionado.id || this.usuarioSelecionado.usuario_id);
+    if (this.municipioSelecionado) {
+      const id = Number(this.municipioSelecionado.id || this.municipioSelecionado.usuario_id);
       const payload = { email: dados.email, role: dados.role, municipio: dados.nome };
   
       this.usuarioService.atualizarUsuario(id, payload).subscribe({
         next: () => {
-          alert('Usuário updated com sucesso!');
+          alert('Usuário atualizado com sucesso!');
           this.fecharModal();
           this.carregarUsuarios();
         },
@@ -69,7 +68,9 @@ export class CadastroComponent implements OnInit {
         error: (err) => console.error('Erro ao cadastrar:', err)
       });
     }
+    
   }
+  
   
   deletarUsuario(usuario: any) {
     const id = typeof usuario === 'object' ? usuario.usuario_id || usuario.id : usuario;
@@ -99,21 +100,23 @@ export class CadastroComponent implements OnInit {
   }
   
   abrirModalCadastro() {
-    this.usuarioSelecionado = null;
+    this.municipioSelecionado = null;
     this.mostrarModal = true;
   }
 
-  abrirDetalhes(usuario: any) {
-    this.usuarioSelecionado = usuario;
+  abrirDetalhes(municipio: any) {
+    this.municipioSelecionado = municipio;
     this.mostrarModal = true;
   }
 
-  editarUsuario(usuario: any) {
-    this.usuarioSelecionado = usuario;
+  editarMunicipio(municipio: any) {
+    this.municipioSelecionado = municipio;
     this.mostrarModal = true;
   }
 
   fecharModal() {
     this.mostrarModal = false;
   }
+
+
 }

@@ -1,4 +1,54 @@
 <app-public-layout>
 
-
-</app-public-layout>
+    <div class="page-header">
+      <h1>Dashboard Defesa Civil</h1>
+      <p>{{ dataAtual | date:'fullDate' }}</p>
+    </div>
+  
+    <div class="cards-container">
+      <div class="card kpi">
+        <h2 class="card-titulo">Doações Recebidas</h2>
+        <p class="card-valor">{{ doacoesRecebidas }} itens</p>
+        <p class="card-subtitulo">Total de kits: {{ totalKitsDoacao }}</p>
+      </div>
+  
+      <div class="card kpi">
+        <h2 class="card-titulo">Solicitações</h2>
+        <p class="card-valor">{{ totalSolicitacoes }}</p>
+        <p class="card-subtitulo">Pendentes: {{ solicitacoesPendentes }}</p>
+        <p class="card-subtitulo">Atendidas: {{ solicitacoesAtendidas }}</p>
+      </div>
+  
+      <div class="card kpi">
+        <h2 class="card-titulo">Estoque Disponível</h2>
+        <p class="card-valor">{{ estoqueDisponivelTotal }} itens</p>
+        <p class="card-subtitulo">Kits: {{ totalKits }}</p>
+      </div>
+    </div>
+  
+    <!-- MAPA -->
+    <div class="map-container">
+      <h3>Mapa de usuarios cadastrados por municipio</h3>
+      <div id="map" class="map"></div>
+    </div>
+  
+    <!-- GRÁFICOS -->
+    <h2 class="titulo-graficos"> Visualização Geral do Sistema</h2>
+    <div class="graficos-container">
+      <div class="grafico">
+        <h4>Evolução do Estoque (Últimos 30 dias)</h4>
+        <canvas id="graficoEstoque"></canvas>
+      </div>
+  
+      <div class="grafico">
+        <h4>Solicitações por Dia</h4>
+        <canvas id="graficoSolicitacoes"></canvas>
+      </div>
+  
+      <div class="grafico" style="grid-column: span 2;">
+        <h4>Doações RECEBIDAS (Últimos Dias)</h4>
+        <canvas id="graficoDoacoes"></canvas>
+      </div>
+    </div>
+  
+  </app-public-layout>

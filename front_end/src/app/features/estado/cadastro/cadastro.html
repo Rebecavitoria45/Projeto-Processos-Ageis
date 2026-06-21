@@ -10,15 +10,15 @@
   </div>
 
   <app-tabela-usuarios
-    [usuarios]="usuarios"
+    [usuarios]="municipios"
     (verDetalhes)="abrirDetalhes($event)"
-    (editar)="editarUsuario($event)"
+    (editar)="editarMunicipio($event)"
     (remover)="deletarUsuario($event)">
   </app-tabela-usuarios>
 
   <app-modal-cadastro
     *ngIf="mostrarModal"
-    [usuario]="usuarioSelecionado"
+    [usuario]="editarMunicipio"
     (fechar)="fecharModal()"
     (salvar)="salvarOuAtualizar($event)"
     (deletar)="deletarUsuario($event)">
