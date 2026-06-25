@@ -70,5 +70,17 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 - Telas de Gerenciamento de Estoque
 ## 📦 Resultados
 - Conclusão do Módulo de gerenciamento de estoque (Produtos e Kits)
+
+# 🔵 Sprint 4 – Módulo de Solicitações Kit e Saida Produtos
+📅 18/06/2026 → 26/06/2026
+## ⚙️ Principais atividades
+- Implementação do módulo de solicitações e saida Kits
+## 📦 Resultados
+-  Implementação do módulo de solicitação
+-  Implementação de rastreio para saída dos Kits
+-  Telas de solicitações
+-  Integração do Backend com o Frontend
+  
+
   
 
