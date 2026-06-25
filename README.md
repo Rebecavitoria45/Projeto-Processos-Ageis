@@ -80,6 +80,56 @@ O projeto foi desenvolvido com o objetivo de facilitar o gerenciamento de doaç�
 -  Implementação de rastreio para saída dos Kits
 -  Telas de solicitações
 -  Integração do Backend com o Frontend
+
+## 🚀 Como Executar o Projeto 
+
+### 1\. Requisitos do Sistema
+
+Para garantir o correto funcionamento do ambiente de desenvolvimento, são necessários:
+
+  * **Docker Desktop:** Essencial para a construção e gerenciamento dos containers, fornecendo a plataforma Docker e o Docker Compose.
+  * **Git:** Recomendado para clonar o repositório e utilizar a linha de comando.
+
+### 2\. Preparação e Configuração
+
+**2.1. Obtenção do Código-Fonte:**
+Você tem duas opções para obter o código:
+
+  * **Opção A: Clonar via Git (Recomendado):**
+    Abra seu terminal (**Git Bash**, terminal Linux/macOS, ou PowerShell) e execute o comando:
+
+    ```bash
+    git clone https://github.com/Rebecavitoria45/Projeto-Processos-Ageis.git
+    ```
+
+    Em seguida, entre na pasta raiz do projeto:
+
+    ```bash
+    cd SistemaGerenciadorDoacoes
+    ```
+
+  * **Opção B: Download Direto:**
+    Baixe o projeto como um arquivo ZIP diretamente do GitHub e extraia-o. Após a extração, abra seu terminal na pasta raiz do projeto (`SistemaGerenciadorDoacoes`).
+
+**2.2. Criação e Configuração do Arquivo `.env`:**
+Crie o arquivo **`.env`** na raiz do projeto e preencha as variáveis, como as credenciais do banco de dados (`DB_NAME`, `DB_USER`, `DB_PASSWORD`), a **chave secreta (`SECRET`)**, e as credenciais de e-mail para testes.
+
+> **Importante:** A **`FRONTEND_ACTIVATION_URL`** deve ser definida com o endereço de teste local: `http://localhost:4200/definir`.
+
+### 3\. Inicialização e Acesso
+
+Com o Docker Desktop em execução e seu terminal posicionado na pasta raiz (`SistemaGerenciadorDoacoes`), execute o comando Docker Compose. Ele se encarregará de construir as imagens, instalar todas as dependências (Node.js e Angular via `npm install`) e iniciar os serviços, garantindo que o Backend aguarde o Banco de Dados.
+
+```bash
+docker-compose up --build -d
+```
+
+Após a inicialização, a aplicação estará acessível internamente:
+
+  * **Acesso ao Frontend:** `http://localhost:4200`
+  * **Acesso ao Backend (Swagger):** `http://localhost:3000/api-docs/`
+  * **Porta do Banco de Dados:** `3307` (mapeada para a porta interna 3306)
+-----
   
 
   
