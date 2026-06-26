@@ -23,17 +23,17 @@ services:
       db:
         condition: service_healthy
 
-  #front:
-   # build:
-    #  context: ./front_end
-    #  dockerfile: Dockerfile
-    #container_name: sgd-front
-    #ports:
-    #  - "4200:4200"
-    #stdin_open: true
-    #tty: true
-    # depends_on:
-    #   - app      
+  front:
+    build:
+      context: ./front_end
+      dockerfile: Dockerfile
+    container_name: sgd-front
+    ports:
+      - "4200:4200"
+    stdin_open: true
+    tty: true
+    depends_on:
+       - app      
 
   db:
     image: mysql:8.0

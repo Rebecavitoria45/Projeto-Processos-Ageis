@@ -11,6 +11,7 @@ const produtoRouter = require('./routers/ProdutoRouter');
 const entradaProdutoRoutes = require('./routers/EntradaProdutoRouter');
 const kitRouter = require('./routers/kitRouter');
 const solicitacaoRouter = require('./routers/SolicitacaoRouter');
+const saidaKitRouter = require('./routers/SaidaKitRouter')
 
 // --- Importa os models para o Sequelize conhecê-los ---
 const Usuario = require('./models/usuario');
@@ -20,10 +21,11 @@ const ProdutoKit = require('./models/produtoKit');
 const Kit = require('./models/kit'); 
 const Solicitacao = require('./models/Solicitacao'); 
 const SolicitacaoKit = require('./models/SolicitacaoKit'); 
+const SaidaKit = require('./models/SaidaKit')
 
 // --- Configura as Associações ---
 // Colocamos os modelos num objeto para facilitar
-const models = { Usuario, EntradaProduto, Produto, ProdutoKit, Kit, Solicitacao, SolicitacaoKit};
+const models = { Usuario, EntradaProduto, Produto, ProdutoKit, Kit, Solicitacao, SolicitacaoKit, SaidaKit };
 
 // Percorre cada modelo e, se tiver o método 'associate', executa ele
 Object.keys(models).forEach(modelName => {
@@ -48,6 +50,7 @@ app.use('/api', produtoRouter);
 app.use('/api', entradaProdutoRoutes);
 app.use('/api', kitRouter);
 app.use('/api', solicitacaoRouter);
+app.use('/api', saidaKitRouter);
 
 const startServer = async () => {
     try {

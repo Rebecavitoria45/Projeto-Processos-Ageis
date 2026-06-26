@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Solicitacao = require('./Solicitacao');
-const Kit = require('./Kit'); 
+const Kit = require('./kit'); 
 
 const SolicitacaoKit = sequelize.define('SolicitacaoKit', {
   solicitacao_kit_id: {
