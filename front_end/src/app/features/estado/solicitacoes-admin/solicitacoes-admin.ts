@@ -78,8 +78,7 @@ export class SolicitacoesComponent implements OnInit {
         forkJoin(lista.map(s =>
           forkJoin({ usuarios: this.usuarioService.listarUsuarios() }).pipe(
             map(({ usuarios }) => {
-              const usuario = usuarios.find(u => u.usuario_id === s.usuario_id);
-
+              const usuario = usuarios.find(u => (u.usuario_id || u.id) === (s.usuario_id || s.id_usuario));
               const kitEncontrado = this.kitsDisponiveis.find(k =>
                 (k.tipo_kit || '').toLowerCase().trim() === (s.tipo_kit || '').toLowerCase().trim()
               );

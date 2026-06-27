@@ -17,7 +17,7 @@
   </app-tabela-municipios>
 
 <app-modal-cadastro 
-  *if="mostrarModal" 
+  *ngIf="mostrarModal" 
   [municipio]="municipioSelecionado" 
   (fechar)="fecharModal()" 
   (salvar)="salvarOuAtualizar($event)"

@@ -55,8 +55,8 @@ export class CadastroComponent {
         nome: dados.nome,    
         email: dados.email,
         role: dados.role,
-        municipio: dados.nome 
-      };
+        municipio: dados.municipio
+            };
     
       console.log('Payload enviado:', payload); 
       this.usuarioService.cadastrarUsuario(payload).subscribe({

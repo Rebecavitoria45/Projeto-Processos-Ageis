@@ -1,16 +1,65 @@
 <app-public-layout>
-  <div class="conteudo-home">
+  <div class="conteudo-municipio">
 
     <div class="page-header">
-      <h1>Painel de Controle </h1>
+      <h1>Painel de Controle Municipal</h1>
       <p>Resumo geral das solicitações e indicadores</p>
     </div>
 
     <div class="atendimento-cards">
-      <button class="nav-card" [routerLink]="['/solicitacoUser']">Solicitações</button>
+      <button class="nav-card" [routerLink]="['/solicitacaomunicipio']">Solicitações</button>
     </div>
 
 
+    <div class="stats-container">
+      <h3>Estatísticas</h3>
+      <div class="stats-numbers">
+
+        <div class="stats-number-card">
+          <p>Total de solicitações</p>
+          <strong>{{ totalSolicitacoes }}</strong>
+          <div class="mini-bar" style="width:100%"></div>
+        </div>
+      
+        <div class="stats-number-card">
+          <p>Solicitações atendidas</p>
+          <strong>{{ solicitacoesAtendidas }}</strong>
+          <div class="mini-bar"
+               [style.width.%]="totalSolicitacoes ? (solicitacoesAtendidas / totalSolicitacoes * 100) : 0"
+               style="background-color: #4CAF50;"></div>
+        </div>
+      
+        <div class="stats-number-card">
+          <p>Solicitações reprovadas</p>
+          <strong>{{ solicitacoesReprovadas }}</strong>
+          <div class="mini-bar"
+               [style.width.%]="totalSolicitacoes ? (solicitacoesReprovadas / totalSolicitacoes * 100) : 0"
+               style="background-color: #F44336;"></div>
+        </div>
+      
+        <div class="stats-number-card">
+          <p>Solicitações em aberto</p>
+          <strong>{{ solicitacoesEmAberto }}</strong>
+          <div class="mini-bar"
+               [style.width.%]="totalSolicitacoes ? (solicitacoesEmAberto / totalSolicitacoes * 100) : 0"
+               style="background-color: #ffd344;"></div>
+        </div>
+      
+      </div>
+      
+      </div>
+      <div class="stats-chart">
+        <app-grafico
+          [graficoData]="[
+            totalSolicitacoes,
+            solicitacoesAtendidas,
+            solicitacoesReprovadas,
+            solicitacoesEmAberto,
+      
+          ]">
+        </app-grafico>
+      </div>
+      
 
   </div>
 </app-public-layout>
