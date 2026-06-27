@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core'; 
 import { PublicLayoutComponent } from '../../../components/public-layout/public-layout.component';
 import { GraficoComponent } from "../../../components/grafico.component/grafico.component";
 import { RouterModule } from '@angular/router';
@@ -12,25 +12,34 @@ import { CommonModule } from '@angular/common';
   templateUrl: './homepage-user.html',
   styleUrls: ['./homepage-user.css']
 })
-export class HomepageMunicipioComponent implements OnInit {
+export class HomepageMunicipioComponent implements AfterViewInit { 
 
   totalSolicitacoes = 0;
   solicitacoesAtendidas = 0;
   solicitacoesEmAberto = 0;
   solicitacoesReprovadas = 0;
 
-  graficoData: number[] = [0, 0, 0]; 
+  graficoData: number[] = [0, 0, 0, 0]; 
 
-  constructor(private solicitacaoService: SolicitacaoService) {}
+  constructor(
+    private solicitacaoService: SolicitacaoService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  ngOnInit() {
-    this.carregarEstatisticas();
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.carregarEstatisticas();
+    }, 200);
   }
 
   carregarEstatisticas() {
     const usuarioId = Number(localStorage.getItem('user_id'));
 
-    if (!usuarioId) return;
+    if (!usuarioId) {
+      this.cdr.detectChanges();
+      return;
+    }
+
     this.solicitacaoService.listarSolicitacoesDoUsuario(usuarioId).subscribe({
       next: (res: any[]) => {
         this.totalSolicitacoes = res.length;
@@ -48,17 +57,18 @@ export class HomepageMunicipioComponent implements OnInit {
         ).length;
     
         this.graficoData = [
-          this.solicitacoesAtendidas + this.solicitacoesReprovadas + this.solicitacoesEmAberto, // total
-          this.solicitacoesAtendidas,   // aprovado
-          this.solicitacoesReprovadas,  // reprovado
-          this.solicitacoesEmAberto     // pendente
+          this.totalSolicitacoes,         // total
+          this.solicitacoesAtendidas,    // aprovado
+          this.solicitacoesReprovadas,   // reprovado
+          this.solicitacoesEmAberto      // pendente
         ];
         
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Erro ao buscar solicitações:', err);
+        this.cdr.detectChanges();
       }
-  
     });
   }
 }

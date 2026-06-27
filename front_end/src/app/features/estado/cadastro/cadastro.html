@@ -9,11 +9,9 @@
     <button class="btn-add" (click)="abrirModalCadastro()">+ Cadastrar Novo Usuário</button>
   </div>
 
-  <app-tabela-municipios
+  <app-tabela-municipios 
     [municipios]="municipios"
-    (verDetalhes)="abrirDetalhes($event)"
-    (editar)="editarMunicipio($event)"
-    (remover)="deletarUsuario($event)">
+    (verDetalhes)="abrirDetalhes($event)">
   </app-tabela-municipios>
 
 <app-modal-cadastro 

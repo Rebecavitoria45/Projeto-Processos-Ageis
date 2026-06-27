@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { PublicLayoutComponent } from '../../../components/public-layout/public-layout.component';
 import * as L from 'leaflet';
@@ -40,11 +40,13 @@ export class HomepageComponent implements AfterViewInit {
   totalKits = 0;
   kitsDisponiveis: any[] = [];
   dataAtual: Date = new Date();
+
   constructor(
     private usuarioService: UsuarioService,
     private solicitacaoService: SolicitacaoService,
     private kitService: KitService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngAfterViewInit(): void {
@@ -53,14 +55,12 @@ export class HomepageComponent implements AfterViewInit {
     }, 200);
   }
   
-
   carregarDados() {
     this.carregarUsuarios();
     this.carregarKits();
     this.carregarSolicitacoes();
     this.carregarDoacoes();
   }
-
 
   carregarDoacoes() {
     this.kitService.listar().subscribe({
@@ -100,18 +100,17 @@ export class HomepageComponent implements AfterViewInit {
         this.labelsDias = labels;
         this.doacoesUltimos30Dias = Object.values(historico);
   
+        this.cdr.detectChanges(); 
+
         setTimeout(() => this.criarGraficoDoacoes(), 200);
       },
       error: () => console.error("Erro ao carregar doações")
     });
   }
   
-  
-
   carregarSolicitacoes() {
     this.solicitacaoService.listarSolicitacoes().subscribe({
         next: (solicitacoes) => {
-            
             const totalDocs = solicitacoes.length; 
             
             this.solicitacoesLabels = ['Total']; 
@@ -125,16 +124,13 @@ export class HomepageComponent implements AfterViewInit {
               return status === 'aprovado' || status === 'reprovado';
             }).length;
             
-            
-            console.log(solicitacoes.map(s => s.status));
+            this.cdr.detectChanges(); 
 
             setTimeout(() => this.criarGraficoSolicitacoes(), 500);
-            
-            this.criarGraficoSolicitacoes(); 
         },
         error: err => console.error('Erro ao carregar solicitações:', err)
     });
-}
+  }
 
   carregarUsuarios() {
     this.usuarioService.listarUsuarios().subscribe({
@@ -144,6 +140,8 @@ export class HomepageComponent implements AfterViewInit {
           .map(u => u.municipio);
 
         this.cadastrados = Array.from(new Set(municipios));
+
+        this.cdr.detectChanges(); 
 
         if (this.map) {
           this.atualizarMapa();
@@ -161,7 +159,7 @@ export class HomepageComponent implements AfterViewInit {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 500);
-      }
+  }
 
   atualizarMapa() {
     const cadastradosGeoJSON: FeatureCollection = {
@@ -204,7 +202,6 @@ export class HomepageComponent implements AfterViewInit {
             year: 'numeric'
           });
           
-          
           const qtd = Number(k.quantidade_kit || 0);
   
           if (historico.hasOwnProperty(data)) {
@@ -219,6 +216,8 @@ export class HomepageComponent implements AfterViewInit {
   
         this.estoqueUltimos30Dias = valores;
   
+        this.cdr.detectChanges(); 
+
         setTimeout(() => this.criarGraficoEstoque(), 200);
       },
       error: () => console.error("Erro ao carregar kits")
@@ -246,7 +245,7 @@ export class HomepageComponent implements AfterViewInit {
             pointRadius: 5,
             pointBackgroundColor: '#3498db',
             fill: true,
-            backgroundColor: 'rgba(52, 152, 219, 0.15)' // Azul suave
+            backgroundColor: 'rgba(52, 152, 219, 0.15)'
           }
         ]
       },
@@ -266,68 +265,69 @@ export class HomepageComponent implements AfterViewInit {
     });
   }
   
-criarGraficoSolicitacoes() {
-  const canvas = document.getElementById('graficoSolicitacoes') as HTMLCanvasElement;
-  if (!canvas) return;
+  criarGraficoSolicitacoes() {
+    const canvas = document.getElementById('graficoSolicitacoes') as HTMLCanvasElement;
+    if (!canvas) return;
 
-  const chartInstance = Chart.getChart(canvas);
-  if (chartInstance) chartInstance.destroy();
+    const chartInstance = Chart.getChart(canvas);
+    if (chartInstance) chartInstance.destroy();
 
-  new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels: ['Pendentes', 'Atendidas'],
-      datasets: [{
-        label: 'Solicitações',
-        data: [this.solicitacoesPendentes, this.solicitacoesAtendidas],
-        backgroundColor: ['#e74c3c', '#2ecc71']
-      }]
-    },
-    options: {
-      responsive: true
-    }
-  });
-}
-criarGraficoDoacoes() {
-  const ctx2 = document.getElementById('graficoDoacoes') as HTMLCanvasElement;
-  if (!ctx2) return;
-
-  const chartInstance = Chart.getChart(ctx2);
-  if (chartInstance) chartInstance.destroy();
-
-  new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: this.labelsDias,
-      datasets: [{
-        label: 'Doações (Itens por Dia)',
-        data: this.doacoesUltimos30Dias,
-        borderWidth: 3,
-        tension: 0.4,
-        borderColor: '#27ae60',   // Linha verde
-        pointRadius: 5,
-        pointBackgroundColor: '#2ecc71',
-        fill: true,
-        backgroundColor: 'rgba(46, 204, 113, 0.2)'
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: ['Pendentes', 'Atendidas'],
+        datasets: [{
+          label: 'Solicitações',
+          data: [this.solicitacoesPendentes, this.solicitacoesAtendidas],
+          backgroundColor: ['#e74c3c', '#2ecc71']
+        }]
       },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: (context) => `Quantidade: ${context.raw}`
+      options: {
+        responsive: true
+      }
+    });
+  }
+
+  criarGraficoDoacoes() {
+    const ctx2 = document.getElementById('graficoDoacoes') as HTMLCanvasElement;
+    if (!ctx2) return;
+
+    const chartInstance = Chart.getChart(ctx2);
+    if (chartInstance) chartInstance.destroy();
+
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: this.labelsDias,
+        datasets: [{
+          label: 'Doações (Itens por Dia)',
+          data: this.doacoesUltimos30Dias,
+          borderWidth: 3,
+          tension: 0.4,
+          borderColor: '#27ae60',   
+          pointRadius: 5,
+          pointBackgroundColor: '#2ecc71',
+          fill: true,
+          backgroundColor: 'rgba(46, 204, 113, 0.2)'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (context) => `Quantidade: ${context.raw}`
+            }
           }
         }
       }
-    }
-  });
-}
+    });
+  }
 
   geraLabelsUltimos30Dias(): string[] {
     const labels = [];
@@ -341,7 +341,7 @@ criarGraficoDoacoes() {
         month: 'long',  
         year: 'numeric',
       }));
-          }
+    }
     return labels;
   }
 }

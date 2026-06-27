@@ -37,33 +37,31 @@ export class LoginFormComponent {
     const { email, senha } = this.loginForm.value;
 
     this.authService.login(email, senha).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         console.log('Login bem-sucedido:', res);
 
         if (res.token) {
-          // Salvar token
           localStorage.setItem('token', res.token);
 
-          //Decodificar token para pegar dados do usuário
           const decoded: any = jwtDecode(res.token);
           console.log('Usuário logado:', decoded);
 
-          // Salvar role e user_id
           localStorage.setItem('role', decoded.role || '');
           localStorage.setItem('user_id', String(decoded.id));
 
-          //  Redirecionamento por role
           const redirectMap: any = {
             admin: '/homepage',
-            user: '/homeUser'
+            estadual: '/homepage',
+            municipal: '/homemunicipio'
           };
+          
           const destino = redirectMap[decoded.role] || '/login';
 
           alert(`Bem-vindo, ${decoded.email}!`);
           this.router.navigate([destino]);
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Erro no login:', err);
         this.errorMsg = err.error?.msg || 'Erro ao fazer login. Verifique suas credenciais.';
       }

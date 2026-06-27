@@ -27,7 +27,7 @@
 }
 
 .btn-nova-solicitacao {
-  background: #ff8c00;
+  background-color: rgba(83, 220, 176, 0.7);
   color: #fff;
   border-radius: 12px;
   padding: 0.6rem 1.8rem;
@@ -41,7 +41,7 @@
 }
 
 .btn-nova-solicitacao:hover {
-  background-color: #e36f0e;
+  background-color: rgba(39, 149, 114, 0.7);
 }
 
 .btn-nova-solicitacao .plus {

@@ -11,6 +11,8 @@ export class KitService {
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
+    console.log('TOKEN USADO NO KIT SERVICE:', token);
+  
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json'
@@ -22,7 +24,9 @@ export class KitService {
       observe: 'response'
     }).pipe(
       map((resp: any) => {
-        if (resp.status === 204) return []; 
+        console.log('RESPOSTA LISTAR KITS:', resp.status, resp.body);
+  
+        if (resp.status === 204) return [];
         return resp.body || [];
       })
     );

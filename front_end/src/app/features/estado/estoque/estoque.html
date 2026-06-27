@@ -14,7 +14,7 @@
       </div>
 
       <div class="card kit-card" *ngFor="let kit of kits">
-        <h2>{{ kit.tipo_kit || kit.produto || '—' }}</h2>
+        <h2>{{ kit.tipo_kit }}</h2>
         <p>{{ kit.quantidade_kit }}</p>
       </div>
 
@@ -25,7 +25,6 @@
 
     </div>
 
-    <!-- FILTRO DE DATA -->
     <div class="filtro-data">
       <label>
         De:
@@ -40,7 +39,6 @@
       <button (click)="aplicarFiltro()">Filtrar</button>
     </div>
 
-    <!-- TABELA -->
     <table class="tabela-saidas" *ngIf="saidasFiltradas.length > 0; else semDados">
       <thead>
         <tr>

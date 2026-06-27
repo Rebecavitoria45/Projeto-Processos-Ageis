@@ -36,7 +36,6 @@ export const routes: Routes = [
   { 
     path: 'esqueci', 
     component: EsqueciSenhaComponent,
-    canActivate: [RoleGuard],
     data: { roles: ['admin', 'estadual','municipal'] }
   },
   { 

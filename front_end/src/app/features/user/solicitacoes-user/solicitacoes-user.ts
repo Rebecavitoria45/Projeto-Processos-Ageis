@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SolicitacaoService } from '../../../Service/solicitacao';  
@@ -23,7 +23,7 @@ import autoTable from 'jspdf-autotable';
   templateUrl: './solicitacoes-user.html',
   styleUrls: ['./solicitacoes-user.css']
 })
-export class SolicitacoesMunicipioComponent implements OnInit {
+export class SolicitacoesMunicipioComponent implements AfterViewInit {
 
   filtro: string = '';
   mostrarModal = false;
@@ -34,36 +34,34 @@ export class SolicitacoesMunicipioComponent implements OnInit {
 
   solicitacoes: any[] = [];
   solicitacaoSelecionada: any = null;
-
   municipioUsuario: string = '';
 
-  constructor(private solicitacaoService: SolicitacaoService) {}
-  usuarios: any[] = []; 
+  constructor(
+    private solicitacaoService: SolicitacaoService,
+    private cdr: ChangeDetectorRef 
+  ) {}
 
-  ngOnInit() {
-    this.carregarUsuarios();
-    this.carregarSolicitacoesDoUsuario();
-  }
-  
-  carregarUsuarios() {
-    this.solicitacaoService.listarUsuarios().subscribe({
-      next: (res) => this.usuarios = res,
-      error: (err) => console.error('Erro ao buscar usuários:', err)
-    });
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.carregarSolicitacoesDoUsuario();
+    }, 200);
   }
   
   carregarSolicitacoesDoUsuario() {
     const usuarioId = Number(localStorage.getItem('user_id'));
-    if (!usuarioId) return;
+    if (!usuarioId) {
+      this.cdr.detectChanges();
+      return;
+    }
 
     this.solicitacaoService.listarSolicitacoesDoUsuario(usuarioId).subscribe({
       next: (res: any[]) => {
-        this.solicitacoes = res.map((s: any) => ({
+        const dados = res || [];
+
+        this.solicitacoes = dados.map((s: any) => ({
           produto: s.tipo_kit || '—',
           quantidade: s.quantidade_solicitada || 0,
-          dataSolicitacao: s.data_solicitacao
-            ? new Date(s.data_solicitacao)
-            : new Date(),
+          dataSolicitacao: s.data_solicitacao ? new Date(s.data_solicitacao) : new Date(),
           status: s.status === 'aprovado'
             ? 'Aprovado'
             : s.status === 'reprovado'
@@ -71,8 +69,14 @@ export class SolicitacoesMunicipioComponent implements OnInit {
             : 'Em análise',
           raw: s
         }));
+
+        this.cdr.detectChanges();
       },
-      error: (err) => console.error('Erro ao buscar solicitações do usuário:', err)
+      error: (err) => {
+        console.error('Erro ao buscar solicitações do usuário:', err);
+        this.solicitacoes = [];
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -90,7 +94,7 @@ export class SolicitacoesMunicipioComponent implements OnInit {
     const body = this.solicitacoesFiltradas.map(s => [
       s.produto,
       String(s.quantidade),
-      s.dataSolicitacao.toLocaleDateString(),
+      s.dataSolicitacao.toLocaleDateString('pt-BR'),
       s.status,
     ]);
 
@@ -151,7 +155,7 @@ export class SolicitacoesMunicipioComponent implements OnInit {
     return filtradas;
   }
 
-  ordenar(campo: 'data' | 'quantidade') {
+  orden(campo: 'data' | 'quantidade') {
     if (this.ordenarCampo === campo) {
       this.ordenarAsc = !this.ordenarAsc;
     } else {
@@ -178,7 +182,5 @@ export class SolicitacoesMunicipioComponent implements OnInit {
       usuario_id: d.usuario_id || '—',
       municipio: this.municipioUsuario 
     };
-  
   }
-    
 }

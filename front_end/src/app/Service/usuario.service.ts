@@ -20,7 +20,10 @@ export class UsuarioService {
     return this.http.get<any[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-
+login(credenciais: any): Observable<any> {
+  // Ajuste o endpoint se no seu back-end for diferente de http://localhost:3000/api/usuarios/login
+  return this.http.post<any>(`${this.apiUrl}/login`, credenciais);
+}
   listarUsuariosComLocalizacao(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/localizacao`, {
       headers: this.getHeaders()

@@ -36,11 +36,11 @@
         <thead>
           <tr>
             <th>Produto</th>
-            <th (click)="ordenar('quantidade')">
+            <th (click)="orden('quantidade')">
               Quantidade
               <span *ngIf="ordenarCampo==='quantidade'">{{ ordenarAsc ? '▲' : '▼' }}</span>
             </th>
-            <th (click)="ordenar('data')">
+            <th (click)="orden('data')">
               Data da solicitação
               <span *ngIf="ordenarCampo==='data'">{{ ordenarAsc ? '▲' : '▼' }}</span>
             </th>

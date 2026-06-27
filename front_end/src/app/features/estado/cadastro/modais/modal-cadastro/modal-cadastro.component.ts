@@ -33,15 +33,22 @@ export class ModalCadastroComponent {
   ];
 
   constructor(private fb: FormBuilder) {}
-
   ngOnInit() {
     this.form = this.fb.group({
-      nome: [this.municipio?.nome || this.municipio?.municipio || '', Validators.required],
-      email: [this.municipio?.email || '', [Validators.required, Validators.email]],
-      role: [this.municipio?.role || 'municipal', Validators.required]
+      nome: [
+        this.municipio?.nome || this.municipio?.municipio || '',
+        Validators.required
+      ],
+      email: [
+        this.municipio?.email || '',
+        [Validators.required, Validators.email]
+      ],
+      role: [
+        this.municipio?.role || 'usuario',
+        Validators.required
+      ]
     });
   }
-
   fecharModal() {
     this.fechar.emit();
   }
@@ -52,7 +59,13 @@ export class ModalCadastroComponent {
     }
   
     const { nome, email, role } = this.form.value;
-    const payload = { nome, email, role };
+  
+    const payload = {
+      nome,
+      email,
+      role,
+      municipio: nome
+    };
   
     this.salvar.emit(payload);
   }

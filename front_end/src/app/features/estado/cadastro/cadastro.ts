@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core'; // 1. Adicionado AfterViewInit e ChangeDetectorRef
 import { UsuarioService } from '../../../Service/usuario.service'; 
 import { CommonModule } from '@angular/common';
 import { ModalCadastroComponent } from './modais/modal-cadastro/modal-cadastro.component';
@@ -17,22 +17,37 @@ import { PublicLayoutComponent } from '../../../components/public-layout/public-
   templateUrl: './cadastro.html',
   styleUrls: ['./cadastro.css']
 })
-export class CadastroComponent {
+export class CadastroComponent implements OnInit, AfterViewInit { 
   municipios: any[] = [];
   municipioSelecionado: any | null = null;
   mostrarModal = false;
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    private cdr: ChangeDetectorRef 
+  ) {}
+
   ngOnInit() {
-    this.carregarUsuarios();
+    
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.carregarUsuarios();
+    }, 200);
   }
   
   carregarUsuarios() {
     this.usuarioService.listarUsuarios().subscribe({
       next: (res) => {
         this.municipios = res.filter((u: any) => u.role !== 'admin');
+        
+        this.cdr.detectChanges(); 
       },
-      error: (err) => console.error('Erro ao listar usuários:', err)
+      error: (err) => {
+        console.error('Erro ao listar usuários:', err);
+        this.cdr.detectChanges();
+      }
     });
   }
   
@@ -52,13 +67,13 @@ export class CadastroComponent {
     }
     else {
       const payload = {
-        nome: dados.nome,    
         email: dados.email,
-        role: dados.role,
-        municipio: dados.municipio
-            };
+        role: 'municipal',
+        municipio: dados.municipio || dados.nome
+      };
+      
+      console.log('Payload enviado:', payload);
     
-      console.log('Payload enviado:', payload); 
       this.usuarioService.cadastrarUsuario(payload).subscribe({
         next: () => {
           alert('Usuário cadastrado com sucesso! Um e-mail foi enviado para ativação.');
@@ -68,9 +83,7 @@ export class CadastroComponent {
         error: (err) => console.error('Erro ao cadastrar:', err)
       });
     }
-    
   }
-  
   
   deletarUsuario(usuario: any) {
     const id = typeof usuario === 'object' ? usuario.usuario_id || usuario.id : usuario;
@@ -117,6 +130,4 @@ export class CadastroComponent {
   fecharModal() {
     this.mostrarModal = false;
   }
-
-
 }

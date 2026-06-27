@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,7 @@ import { ModalSolicitacaoAdminComponent } from './modal-solicitacao/modal-solici
 import { SolicitacaoService } from '../../../Service/solicitacao';
 import { UsuarioService } from '../../../Service/usuario.service';
 import { KitService } from '../../../Service/kitproduto.service';
+
 interface Solicitacao {
   id: number;
   tipo_kit?: string;
@@ -38,12 +39,11 @@ interface Solicitacao {
   templateUrl: './solicitacoes-admin.html',
   styleUrls: ['./solicitacoes-admin.css']
 })
-export class SolicitacoesComponent implements OnInit {
+export class SolicitacoesComponent implements OnInit, AfterViewInit { 
 
   solicitacoes: Solicitacao[] = [];
   mostrarModal = false;
-  solicitacaoSelecionada: 
-  Solicitacao | null = null;
+  solicitacaoSelecionada: Solicitacao | null = null;
   
   carregando = false;
   erro: string | null = null;
@@ -53,69 +53,88 @@ export class SolicitacoesComponent implements OnInit {
   constructor(
     private solicitacaoService: SolicitacaoService,
     private usuarioService: UsuarioService,
-    private kitService: KitService
+    private kitService: KitService,
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
     this.roleUsuarioLogado = localStorage.getItem('role') || '';
+  }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.carregarDadosIniciais();
+    }, 200);
+  }
+
+  carregarDadosIniciais(): void {
     this.kitService.listar().subscribe({
       next: kits => {
         this.kitsDisponiveis = kits;
         this.carregarSolicitacoes();
       },
-      error: () => this.carregarSolicitacoes()
+      error: () => {
+        this.carregarSolicitacoes();
+      }
     });
   }
 
   carregarSolicitacoes(): void {
     this.carregando = true;
-
-    this.solicitacaoService.listarSolicitacoes().subscribe({
-      next: (res: any[]) => {
-        const lista = Array.isArray(res) ? res : [];
-
-        forkJoin(lista.map(s =>
-          forkJoin({ usuarios: this.usuarioService.listarUsuarios() }).pipe(
-            map(({ usuarios }) => {
-              const usuario = usuarios.find(u => (u.usuario_id || u.id) === (s.usuario_id || s.id_usuario));
+    this.erro = null;
+  
+    this.usuarioService.listarUsuarios().subscribe({
+      next: (usuarios) => {
+        const listaUsuarios = Array.isArray(usuarios) ? usuarios : [];
+  
+        this.solicitacaoService.listarSolicitacoes().subscribe({
+          next: (res: any[]) => {
+            const listaSolicitacoes = Array.isArray(res) ? res : [];
+  
+            const resultado = listaSolicitacoes.map((s: any) => {
+              const usuario = listaUsuarios.find(u => (u.usuario_id || u.id) === (s.usuario_id || s.id_usuario));
+              
               const kitEncontrado = this.kitsDisponiveis.find(k =>
-                (k.tipo_kit || '').toLowerCase().trim() === (s.tipo_kit || '').toLowerCase().trim()
+                (k.tipo_kit || '').toLowerCase().trim() === (s.tipo_kit || s.produto || '').toLowerCase().trim()
               );
-
+  
               return {
-                id: s.solicitacao_id,
-                tipo_kit: s.tipo_kit,
-                quantidadeSolicitada: s.quantidade_solicitada || 0,
+                id: s.solicitacao_id || s.id, 
+                tipo_kit: s.tipo_kit || s.produto || '—',
+                quantidadeSolicitada: s.quantidade_solicitada || s.quantidade || 0,
                 quantidadeAtendida: s.quantidade_atendida ?? 0,
-                quantidadeEstoque: kitEncontrado?.quantidade_kit ?? 0,
-                dataSolicitacao: new Date(s.data_solicitacao).toLocaleDateString(),
+                quantidadeEstoque: kitEncontrado?.quantidade_kit ?? kitEncontrado?.quantidade ?? 0,
+                dataSolicitacao: s.data_solicitacao ? new Date(s.data_solicitacao).toLocaleDateString() : '—',
                 municipioOuUsuario: usuario?.municipio || usuario?.nome || '—',
-                status: s.status,
+                status: s.status || 'Pendente',
                 observacao: s.observacao || '—',
                 historico: s.historico || [],
                 raw: s
               };
-            })
-          )
-        )).subscribe({
-          next: resultado => {
-            this.solicitacoes = resultado;
+            });
+  
+            this.solicitacoes = [...resultado];
             this.carregando = false;
+
+            this.cdr.detectChanges(); 
           },
-          error: () => {
-            this.erro = 'Erro ao processar solicitações.';
+          error: (err) => {
+            console.error(err);
+            this.erro = 'Erro ao carregar solicitações.';
             this.carregando = false;
+            this.cdr.detectChanges();
           }
         });
       },
-      error: () => {
-        this.erro = 'Erro ao carregar solicitações.';
+      error: (err) => {
+        console.error(err);
+        this.erro = 'Erro ao carregar lista de usuários para cruzamento.';
         this.carregando = false;
+        this.cdr.detectChanges();
       }
     });
   }
-
+  
   abrirDetalhes(solicitacao: Solicitacao) {
     this.solicitacaoSelecionada = { ...solicitacao };
     this.mostrarModal = true;
@@ -143,5 +162,7 @@ export class SolicitacoesComponent implements OnInit {
     if (kit) {
       this.solicitacoes[i].quantidadeEstoque = kit.quantidade_kit;
     }
+
+    this.cdr.detectChanges(); 
   }
 }
