@@ -10,7 +10,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 @Component({
-  selector: 'app-solicitacoes-user',
+  selector: 'app-solicitacoes-municipio',
   standalone: true,
   imports: [
     CommonModule,
@@ -23,7 +23,7 @@ import autoTable from 'jspdf-autotable';
   templateUrl: './solicitacoes-user.html',
   styleUrls: ['./solicitacoes-user.css']
 })
-export class SolicitacoesUser implements OnInit {
+export class SolicitacoesMunicipioComponent implements OnInit {
 
   filtro: string = '';
   mostrarModal = false;
@@ -35,7 +35,7 @@ export class SolicitacoesUser implements OnInit {
   solicitacoes: any[] = [];
   solicitacaoSelecionada: any = null;
 
-  Usuarios: string = '';
+  municipioUsuario: string = '';
 
   constructor(private solicitacaoService: SolicitacaoService) {}
   usuarios: any[] = []; 
@@ -176,7 +176,7 @@ export class SolicitacoesUser implements OnInit {
       status: d.status === 'aprovado' ? 'Aprovado' : d.status === 'reprovado' ? 'Reprovado' : 'Em análise',
       observacao: d.observacao || '—',
       usuario_id: d.usuario_id || '—',
-      usuarios: this.usuarios 
+      municipio: this.municipioUsuario 
     };
   
   }

@@ -9,6 +9,7 @@ import { UsuarioService } from '../../../Service/usuario.service';
 import { SolicitacaoService } from '../../../Service/solicitacao';
 import { KitService } from '../../../Service/kitproduto.service';
 import { HttpClient } from '@angular/common/http';
+import { forkJoin, map } from 'rxjs';
 import '@angular/common/locales/global/pt';
 
 @Component({
@@ -39,9 +40,6 @@ export class HomepageComponent implements AfterViewInit {
   totalKits = 0;
   kitsDisponiveis: any[] = [];
   dataAtual: Date = new Date();
-
-  private ultimaContagem: { [key: string]: number } = {};
-
   constructor(
     private usuarioService: UsuarioService,
     private solicitacaoService: SolicitacaoService,
@@ -51,11 +49,11 @@ export class HomepageComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.inicializarMapa();
       this.carregarDados();
-    }, 350);
+    }, 200);
   }
   
+
   carregarDados() {
     this.carregarUsuarios();
     this.carregarKits();
@@ -63,114 +61,6 @@ export class HomepageComponent implements AfterViewInit {
     this.carregarDoacoes();
   }
 
-  normalizarTexto(txt: string): string {
-    if (!txt) return '';
-    return txt.toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .trim();
-  }
-
-  inicializarMapa() {
-    if (this.map) return;
-
-    this.map = L.map('map').setView([-8.38, -37.99], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-    }).addTo(this.map);
-    
-    setTimeout(() => {
-      this.map.invalidateSize();
-      if (Object.keys(this.ultimaContagem).length > 0) {
-        this.atualizarMapa(this.ultimaContagem);
-      }
-    }, 200);
-  }
-
-  carregarUsuarios() {
-    this.usuarioService.listarUsuarios().subscribe({
-      next: (usuarios) => {
-        console.log('Usuários recebidos do Back-end:', usuarios);
-
-        const contagemPorMunicipio: { [key: string]: number } = {};
-
-        usuarios
-          .filter(u => u.role !== 'admin' && u.municipio)
-          .forEach(u => {
-            const chaveNormalizada = this.normalizarTexto(u.municipio);
-            contagemPorMunicipio[chaveNormalizada] = (contagemPorMunicipio[chaveNormalizada] || 0) + 1;
-          });
-
-        this.cadastrados = Object.keys(contagemPorMunicipio);
-        this.ultimaContagem = contagemPorMunicipio;
-        console.log('Objeto de contagem normalizado:', contagemPorMunicipio);
-
-        if (this.map) {
-          this.atualizarMapa(contagemPorMunicipio);
-        }
-      },
-      error: (err) => console.error('Erro ao buscar usuários:', err)
-    });
-  }
-
-  atualizarMapa(contagem: { [key: string]: number } = {}) {
-    if (!this.map) return;
-
-    this.map.eachLayer((layer) => {
-      if (layer instanceof L.GeoJSON || layer instanceof L.CircleMarker) {
-        this.map.removeLayer(layer);
-      }
-    });
-
-    const coordenadasCidades: { [key: string]: [number, number] } = {
-      'recife': [-8.0476, -34.8778],
-      'olinda': [-8.0089, -34.8553],
-      'jaboatao dos guararapes': [-8.1132, -34.9213],
-      'caruaru': [-8.2833, -35.9761],
-      'garanhuns': [-8.8906, -36.4928],
-      'petrolina': [-9.3881, -40.5031],
-      'vitoria de santo antao': [-8.1192, -35.2928],
-      'paulista': [-7.9408, -34.8753],
-      'cabo de santo agostinho': [-8.2872, -35.0322]
-    };
-
-    Object.keys(contagem).forEach(cidadeNormalizada => {
-      const qtdUsuarios = contagem[cidadeNormalizada];
-      const coords = coordenadasCidades[cidadeNormalizada];
-
-      if (coords && qtdUsuarios > 0) {
-        const nomeCidade = cidadeNormalizada.charAt(0).toUpperCase() + cidadeNormalizada.slice(1);
-        
-        const raioDinamico = Math.min(Math.max(qtdUsuarios * 8, 12), 60);
-
-        const circulo = L.circleMarker(coords, {
-          radius: raioDinamico,
-          fillColor: '#44dd44', 
-          color: '#1a7f1a',     
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.75
-        }).addTo(this.map);
-
-        const popupContent = `
-          <div style="font-family: sans-serif; text-align: center; padding: 4px;">
-            <strong style="font-size: 14px; color: #2c3e50;">${nomeCidade}</strong><br/>
-            <span style="font-size: 13px; color: #27ae60; font-weight: bold;">
-              ${qtdUsuarios} ${qtdUsuarios === 1 ? 'usuário' : 'usuários'}
-            </span>
-          </div>
-        `;
-
-        circulo.bindTooltip(popupContent, {
-          sticky: true,
-          direction: 'top'
-        });
-      }
-    });
-
-    this.map.invalidateSize();
-  }
 
   carregarDoacoes() {
     this.kitService.listar().subscribe({
@@ -215,10 +105,13 @@ export class HomepageComponent implements AfterViewInit {
       error: () => console.error("Erro ao carregar doações")
     });
   }
+  
+  
 
   carregarSolicitacoes() {
     this.solicitacaoService.listarSolicitacoes().subscribe({
         next: (solicitacoes) => {
+            
             const totalDocs = solicitacoes.length; 
             
             this.solicitacoesLabels = ['Total']; 
@@ -230,12 +123,62 @@ export class HomepageComponent implements AfterViewInit {
             this.solicitacoesAtendidas = solicitacoes.filter(s => {
               const status = (s.status || '').toLowerCase().trim();
               return status === 'aprovado' || status === 'reprovado';
-        }).length;
+            }).length;
+            
+            
+            console.log(solicitacoes.map(s => s.status));
 
-            setTimeout(() => this.criarGraficoSolicitacoes(), 200);
+            setTimeout(() => this.criarGraficoSolicitacoes(), 500);
+            
+            this.criarGraficoSolicitacoes(); 
         },
         error: err => console.error('Erro ao carregar solicitações:', err)
     });
+}
+
+  carregarUsuarios() {
+    this.usuarioService.listarUsuarios().subscribe({
+      next: (usuarios) => {
+        const municipios = usuarios
+          .filter(u => u.role !== 'admin' && u.municipio)
+          .map(u => u.municipio);
+
+        this.cadastrados = Array.from(new Set(municipios));
+
+        if (this.map) {
+          this.atualizarMapa();
+        } else {
+          this.inicializarMapa();
+        }
+      }
+    });
+  }
+
+  inicializarMapa() {
+    this.map = L.map('map').setView([-8.38, -37.99], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(this.map);
+    this.atualizarMapa();
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 500);
+      }
+
+  atualizarMapa() {
+    const cadastradosGeoJSON: FeatureCollection = {
+      type: "FeatureCollection",
+      features: (municipiosPE as FeatureCollection).features.filter(f => {
+        const nome = f.properties?.['name'];
+        return nome && this.cadastrados.map(n => n.toUpperCase()).includes(nome.toUpperCase());
+      })
+    };
+    L.geoJSON(cadastradosGeoJSON, {
+      style: {
+        color: '#1a7f1a',
+        weight: 2,
+        fillColor: '#44dd44',
+        fillOpacity: 0.6
+      }
+    }).addTo(this.map);
   }
 
   carregarKits() {
@@ -261,6 +204,7 @@ export class HomepageComponent implements AfterViewInit {
             year: 'numeric'
           });
           
+          
           const qtd = Number(k.quantidade_kit || 0);
   
           if (historico.hasOwnProperty(data)) {
@@ -280,7 +224,7 @@ export class HomepageComponent implements AfterViewInit {
       error: () => console.error("Erro ao carregar kits")
     });
   }
-
+  
   criarGraficoEstoque() {
     const canvas = document.getElementById('graficoEstoque') as HTMLCanvasElement;
     if (!canvas) return;
@@ -302,7 +246,7 @@ export class HomepageComponent implements AfterViewInit {
             pointRadius: 5,
             pointBackgroundColor: '#3498db',
             fill: true,
-            backgroundColor: 'rgba(52, 152, 219, 0.15)'
+            backgroundColor: 'rgba(52, 152, 219, 0.15)' // Azul suave
           }
         ]
       },
@@ -310,65 +254,80 @@ export class HomepageComponent implements AfterViewInit {
         responsive: true,
         scales: {
           y: { beginAtZero: true }
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: ctx => `Quantidade: ${ctx.raw}`
+            }
+          }
         }
       }
     });
   }
   
-  criarGraficoSolicitacoes() {
-    const canvas = document.getElementById('graficoSolicitacoes') as HTMLCanvasElement;
-    if (!canvas) return;
+criarGraficoSolicitacoes() {
+  const canvas = document.getElementById('graficoSolicitacoes') as HTMLCanvasElement;
+  if (!canvas) return;
 
-    const chartInstance = Chart.getChart(canvas);
-    if (chartInstance) chartInstance.destroy();
+  const chartInstance = Chart.getChart(canvas);
+  if (chartInstance) chartInstance.destroy();
 
-    new Chart(canvas, {
-      type: 'bar',
-      data: {
-        labels: ['Pendentes', 'Atendidas'],
-        datasets: [{
-          label: 'Solicitações',
-          data: [this.solicitacoesPendentes, this.solicitacoesAtendidas],
-          backgroundColor: ['#e74c3c', '#2ecc71']
-        }]
+  new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: ['Pendentes', 'Atendidas'],
+      datasets: [{
+        label: 'Solicitações',
+        data: [this.solicitacoesPendentes, this.solicitacoesAtendidas],
+        backgroundColor: ['#e74c3c', '#2ecc71']
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+}
+criarGraficoDoacoes() {
+  const ctx2 = document.getElementById('graficoDoacoes') as HTMLCanvasElement;
+  if (!ctx2) return;
+
+  const chartInstance = Chart.getChart(ctx2);
+  if (chartInstance) chartInstance.destroy();
+
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: this.labelsDias,
+      datasets: [{
+        label: 'Doações (Itens por Dia)',
+        data: this.doacoesUltimos30Dias,
+        borderWidth: 3,
+        tension: 0.4,
+        borderColor: '#27ae60',   // Linha verde
+        pointRadius: 5,
+        pointBackgroundColor: '#2ecc71',
+        fill: true,
+        backgroundColor: 'rgba(46, 204, 113, 0.2)'
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
       },
-      options: {
-        responsive: true
-      }
-    });
-  }
-
-  criarGraficoDoacoes() {
-    const ctx2 = document.getElementById('graficoDoacoes') as HTMLCanvasElement;
-    if (!ctx2) return;
-
-    const chartInstance = Chart.getChart(ctx2);
-    if (chartInstance) chartInstance.destroy();
-
-    new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: this.labelsDias,
-        datasets: [{
-          label: 'Doações (Itens por Dia)',
-          data: this.doacoesUltimos30Dias,
-          borderWidth: 3,
-          tension: 0.4,
-          borderColor: '#27ae60',   
-          pointRadius: 5,
-          pointBackgroundColor: '#2ecc71',
-          fill: true,
-          backgroundColor: 'rgba(46, 204, 113, 0.2)'
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: (context) => `Quantidade: ${context.raw}`
+          }
         }
       }
-    });
-  }
+    }
+  });
+}
 
   geraLabelsUltimos30Dias(): string[] {
     const labels = [];
@@ -382,7 +341,7 @@ export class HomepageComponent implements AfterViewInit {
         month: 'long',  
         year: 'numeric',
       }));
-    }
+          }
     return labels;
   }
 }

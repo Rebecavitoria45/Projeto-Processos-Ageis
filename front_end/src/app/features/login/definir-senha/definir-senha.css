@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ff8c3a;
+  background: linear-gradient(180deg, rgba(26,55,99,0.7), rgba(83, 220, 176, 0.7));
   font-family: 'Poppins', sans-serif;
 }
 

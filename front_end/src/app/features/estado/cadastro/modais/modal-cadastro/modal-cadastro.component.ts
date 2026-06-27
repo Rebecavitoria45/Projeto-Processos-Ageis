@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -9,16 +9,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   templateUrl: './modal-cadastro.component.html',
   styleUrls: ['./modal-cadastro.component.css']
 })
-export class ModalCadastroComponent implements OnInit {
-  @Input() usuario: any | null = null;
+export class ModalCadastroComponent {
+  @Input() municipio: any | null = null;
   @Output() fechar = new EventEmitter<void>();
   @Output() salvar = new EventEmitter<any>();
   @Output() deletar = new EventEmitter<any>();
 
   form!: FormGroup;
 
-  // Nome corrigido e mais semântico
-  cidadesDisponiveis: string[] = [
+  municipiosDisponiveis: string[] = [
     'Araçoiaba',
     'Cabo de Santo Agostinho',
     'Camaragibe',
@@ -37,16 +36,15 @@ export class ModalCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      nome: [this.usuario?.nome || this.usuario?.municipio || '', Validators.required],
-      email: [this.usuario?.email || '', [Validators.required, Validators.email]],
-      role: [this.usuario?.role || 'usuario', Validators.required]
+      nome: [this.municipio?.nome || this.municipio?.municipio || '', Validators.required],
+      email: [this.municipio?.email || '', [Validators.required, Validators.email]],
+      role: [this.municipio?.role || 'municipal', Validators.required]
     });
   }
 
   fecharModal() {
     this.fechar.emit();
   }
-
   enviar() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -60,8 +58,8 @@ export class ModalCadastroComponent implements OnInit {
   }
   
   solicitarDelete() {
-    if (this.usuario) {
-      const id = this.usuario.id || this.usuario.usuario_id;
+    if (this.municipio) {
+      const id = this.municipio.id || this.municipio.usuario_id;
       if (id) {
         this.deletar.emit(id);
       }

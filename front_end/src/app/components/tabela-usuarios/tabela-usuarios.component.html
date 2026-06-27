@@ -1,26 +1,26 @@
 <div class="tabela-container">
-  <table class="tabela-usuarios">
+  <table class="tabela-municipios">
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Cargo / Role</th>
+        <th>Role</th>
         <th>Email</th>
         <th class="acoes-col">Ações</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let usuario of usuarios">
-        <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.role }}</td>
-        <td>{{ usuario.email }}</td>
+      <tr *ngFor="let municipio of municipios">
+        <td>{{ municipio.municipio || municipio.nome }}</td>
+        <td>{{ municipio.role }}</td>
+        <td>{{ municipio.email }}</td>
         <td class="acoes-cell">
-          <button class="btn-acoes btn-ver" (click)="abrirDetalhes(usuario)">Ver Detalhes</button>
+          <button class="btn-acoes btn-ver" (click)="abrirDetalhes(municipio)">Ver Detalhes</button>
         </td>
       </tr>
 
-      <tr *ngIf="usuarios.length === 0">
-        <td colspan="4" class="sem-dados">Nenhum usuário cadastrado</td>
+      <tr *ngIf="municipios.length === 0">
+        <td colspan="4" class="sem-dados">Nenhum município cadastrado</td>
       </tr>
     </tbody>
   </table>

@@ -25,7 +25,7 @@ export class ModalSolicitacaoAdminComponent {
   constructor(private solicitacaoService: SolicitacaoService) {}
 
   podeAprovar(): boolean {
-    return ['admin'].includes(this.userRole) 
+    return ['admin', 'estadual'].includes(this.userRole) 
       && this.solicitacao?.status === 'pendente';
   }
   

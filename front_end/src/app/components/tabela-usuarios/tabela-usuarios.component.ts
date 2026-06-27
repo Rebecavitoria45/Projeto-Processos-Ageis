@@ -2,27 +2,27 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-tabela-usuarios',
+  selector: 'app-tabela-municipios',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tabela-usuarios.component.html',
   styleUrls: ['./tabela-usuarios.component.css']
 })
-export class TabelausuariosComponent {
-  @Input() usuarios: any[] = [];
+export class TabelaMunicipiosComponent {
+  @Input() municipios: any[] = [];
   @Output() verDetalhes = new EventEmitter<any>();
   @Output() remover = new EventEmitter<any>(); 
   @Output() editar = new EventEmitter<any>();
 
-  abrirDetalhes(usuario: any) {
-    this.verDetalhes.emit(usuario);
+  abrirDetalhes(municipio: any) {
+    this.verDetalhes.emit(municipio);
   }
 
-  solicitarEdicao(usuario: any) {
-    this.editar.emit(usuario);
+  solicitarEdicao(municipio: any) {
+    this.editar.emit(municipio);
   }
 
-  solicitarRemocao(usuario: any) {
-    this.remover.emit(usuario);
+  solicitarRemocao(municipio: any) {
+    this.remover.emit(municipio);
   }
 }

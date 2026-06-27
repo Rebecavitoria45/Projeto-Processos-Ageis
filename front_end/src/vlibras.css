@@ -11,6 +11,7 @@ html, body, app-root {
 }
 
 [vw] {
-  top: auto !important;
-  left: auto !important;
+  top: 50% !important; /* Centraliza verticalmente */
+  right: 0 !important;  /* Cola na lateral direita */
+  transform: translateY(-50%) !important;
 }

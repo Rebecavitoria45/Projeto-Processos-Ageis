@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { UsuarioService } from '../../../Service/usuario.service'; 
 import { CommonModule } from '@angular/common';
 import { ModalCadastroComponent } from './modais/modal-cadastro/modal-cadastro.component';
-import { TabelausuariosComponent } from '../../../components/tabela-usuarios/tabela-usuarios.component';
+import { TabelaMunicipiosComponent } from '../../../components/tabela-usuarios/tabela-usuarios.component'; 
 import { PublicLayoutComponent } from '../../../components/public-layout/public-layout.component'; 
 
 @Component({
@@ -10,7 +10,7 @@ import { PublicLayoutComponent } from '../../../components/public-layout/public-
   standalone: true,
   imports: [
     CommonModule,
-    TabelausuariosComponent,
+    TabelaMunicipiosComponent,
     ModalCadastroComponent,
     PublicLayoutComponent
   ],

@@ -1,13 +1,13 @@
 <div class="modal-backdrop">
   <div class="modal-content">
-    <h2>{{ usuario ? 'Editar Usuário' : 'Cadastrar Usuário' }}</h2>
+    <h2>{{ municipio ? 'Editar Usuário' : 'Cadastrar Usuário' }}</h2>
 
     <form [formGroup]="form" (ngSubmit)="enviar()">
       <div class="form-group">
         <label>Cidade / Alocação</label>
         <select formControlName="nome">
           <option value="" disabled selected>Selecione a cidade do usuário</option>
-          <option *ngFor="let cidade of cidadesDisponiveis" [value]="cidade">
+          <option *ngFor="let cidade of municipiosDisponiveis" [value]="cidade">
             {{ cidade }}
           </option>
         </select>
@@ -30,10 +30,10 @@
 
       <div class="button-group">
         <button type="submit" class="btn salvar">
-          {{ usuario ? 'Salvar Alterações' : 'Cadastrar' }}
+          {{ municipio ? 'Salvar Alterações' : 'Cadastrar' }}
         </button>
         <button type="button" class="btn cancelar" (click)="fecharModal()">Cancelar</button>
-        <button *ngIf="usuario && usuario.role !== 'admin'" type="button" class="btn deletar" (click)="solicitarDelete()">
+        <button *ngIf="municipio && municipio.role !== 'admin'" type="button" class="btn deletar" (click)="solicitarDelete()">
           Deletar
         </button>
       </div>

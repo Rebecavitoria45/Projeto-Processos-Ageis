@@ -24,17 +24,16 @@ export class SidebarComponent implements OnInit {
   goHome() {
     const role = this.role;
   
-    if (role === 'admin') {
+    if (role === 'admin' || role === 'estadual') {
       this.router.navigate(['/homepage']);
-    } else if (role === 'usuario') {
-      this.router.navigate(['/homeUser']);
+    } else if (role === 'municipal') {
+      this.router.navigate(['/homemunicipio']);
     } else {
       this.router.navigate(['/login']);
     }
   }
-  setMenuByRole() {
-    const roleMockada = 'admin'; 
   
+  setMenuByRole() {
     const menuPorRole: Record<string, { label: string; route: string }[]> = {
       admin: [
         { label: 'Homepage', route: '/homepage' },
@@ -44,14 +43,20 @@ export class SidebarComponent implements OnInit {
         { label: 'Usuários', route: '/cadastro' }
       ],
   
-      usuario: [
-        { label: 'Homepage', route: '/homeUser' },
-        { label: 'Solicitações', route: '/solicitacaoUser' },
+      estadual: [
+        { label: 'Homepage', route: '/homepage' },
+        { label: 'Solicitações', route: '/solicitacoes' },
+        { label: 'Estoque', route: '/estoque' },
+        { label: 'Produtos', route: '/produtos' },
+      ],
+  
+      municipal: [
+        { label: 'Homepage', route: '/homemunicipio' },
+        { label: 'Solicitações', route: '/solicitacaomunicipio' },
       ]
     };
   
-    this.menuItems = menuPorRole[roleMockada] || [];
-  
+    this.menuItems = menuPorRole[this.role || ''] || [];
   }
   
   

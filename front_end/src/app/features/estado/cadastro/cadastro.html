@@ -9,19 +9,19 @@
     <button class="btn-add" (click)="abrirModalCadastro()">+ Cadastrar Novo Usuário</button>
   </div>
 
-  <app-tabela-usuarios
-    [usuarios]="municipios"
+  <app-tabela-municipios
+    [municipios]="municipios"
     (verDetalhes)="abrirDetalhes($event)"
     (editar)="editarMunicipio($event)"
     (remover)="deletarUsuario($event)">
-  </app-tabela-usuarios>
+  </app-tabela-municipios>
 
-  <app-modal-cadastro
-    *ngIf="mostrarModal"
-    [usuario]="editarMunicipio"
-    (fechar)="fecharModal()"
-    (salvar)="salvarOuAtualizar($event)"
-    (deletar)="deletarUsuario($event)">
-  </app-modal-cadastro>
+<app-modal-cadastro 
+  *if="mostrarModal" 
+  [municipio]="municipioSelecionado" 
+  (fechar)="fecharModal()" 
+  (salvar)="salvarOuAtualizar($event)"
+  (deletar)="deletarUsuario($event)">
+</app-modal-cadastro>
 
 </app-public-layout>

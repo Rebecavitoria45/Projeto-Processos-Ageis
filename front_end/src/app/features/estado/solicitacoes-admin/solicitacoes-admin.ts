@@ -10,7 +10,6 @@ import { ModalSolicitacaoAdminComponent } from './modal-solicitacao/modal-solici
 import { SolicitacaoService } from '../../../Service/solicitacao';
 import { UsuarioService } from '../../../Service/usuario.service';
 import { KitService } from '../../../Service/kitproduto.service';
-
 interface Solicitacao {
   id: number;
   tipo_kit?: string;
